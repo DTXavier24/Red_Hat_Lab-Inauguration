@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
+    <title>APU Red Hat Club</title>
     <style>
+        :root {
+            --redhat-red: #ee0000;
+            --redhat-dark: #820000;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -14,10 +19,20 @@
         }
 
         nav {
-            background-color: #333;
+            background-color: black;
             padding: 1rem;
             position: sticky;
             top: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 2rem;
+            object-fit: contain;
         }
 
         nav a {
@@ -27,14 +42,35 @@
             margin: 0 0.5rem;
             border-radius: 4px;
             transition: background-color 0.3s;
+            font-weight: bold;
         }
 
         nav a:hover {
-            background-color: #555;
+            background-color: var(--redhat-red);
         }
 
         .active {
-            background-color: #4CAF50;
+            background-color: var(--redhat-red);
+        }
+
+        .hero {
+            background-color: black;
+            padding: 3rem 1rem;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-logo {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 2rem;
+            animation: floatLogo 3s ease-in-out infinite;
+        }
+
+        @keyframes floatLogo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         main {
@@ -42,6 +78,9 @@
             padding: 2rem;
             display: none;
             animation: fadeIn 0.5s;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 90%;
         }
 
         main.visible {
@@ -49,112 +88,251 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card {
-            background-color: #f5f5f5;
-            padding: 1rem;
+            background-color: white;
+            padding: 1.5rem;
             margin: 1rem 0;
             border-radius: 8px;
-            transition: transform 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
         button {
-            background-color: #4CAF50;
+            background-color: var(--redhat-red);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s;
+            font-weight: bold;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: var(--redhat-dark);
         }
 
         footer {
-            background-color: #333;
+            background-color: black;
             color: white;
             text-align: center;
             padding: 1rem;
-            margin-top: auto;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .announcement {
+            background-color: #ffeb3b;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
     </style>
 </head>
 <body>
     <nav>
+        <img src="logo.jpg" alt="Red Hat Logo" class="nav-logo">
         <a href="#" onclick="showPage('home')" id="homeLink" class="active">Home</a>
-        <a href="#" onclick="showPage('about')" id="aboutLink">About</a>
-        <a href="#" onclick="showPage('contact')" id="contactLink">Contact</a>
+        <a href="#" onclick="showPage('events')" id="eventsLink">Events</a>
+        <a href="#" onclick="showPage('resources')" id="resourcesLink">Resources</a>
+        <a href="#" onclick="showPage('join')" id="joinLink">Join Us</a>
     </nav>
 
     <main id="home" class="visible">
-        <h1>Welcome to Our Website</h1>
-        <div class="card">
-            <h2>Featured Content</h2>
-            <p>This is our amazing featured content. Click the button below to see something cool!</p>
-            <button onclick="alert('Thanks for clicking!')">Click Me!</button>
+        <div class="hero">
+            <img src="logo.jpg" alt="Red Hat Logo" class="hero-logo">
+            <h1>Welcome to APU Red Hat Club</h1>
+            <p>Empowering students with open-source knowledge and Linux expertise</p>
         </div>
+
+        <div class="announcement" id="announcement">
+            🎉 New Workshop Coming Soon: "Introduction to Linux Administration" - Stay tuned!
+            <button onclick="this.parentElement.style.display='none'" style="float: right; padding: 0.3rem 0.8rem;">×</button>
+        </div>
+
         <div class="card">
-            <h2>Latest Updates</h2>
-            <p>Stay tuned for more exciting updates...</p>
-            <button onclick="this.textContent = 'Updated!'">Check Updates</button>
+    <h2>About Our Club</h2>
+    
+    <div class="card">
+    <p>The APU Red Hat Club is a student-led technical community officially recognized by APU and supported by Red Hat. We focus on open-source technology, cloud computing, DevOps, and system administration.</p>
+    
+    <h4>Leadership</h4>
+    <p>Led by our advisors, Ts. Dr. Manimegalai and Mr Shahab, alongside our student leaders Ng Zi Yuan (Ambassador), Amjad Alrifaai (President), and Gatleen (Vice President).</p>
+
+    <h4>What We Offer</h4>
+    <ul>
+        <li>Hands-on workshops and training</li>
+        <li>Networking with industry professionals</li>
+        <li>Technical skill development</li>
+        <li>Community collaboration</li>
+    </ul>
+
+    <button onclick="showPage('join')">Join Now</button>
+</div>
+</div>
+
+        <div class="card">
+            <h2>Latest News</h2>
+            <p>Stay updated with our latest activities and announcements!</p>
+            <div id="newsCounter">Members joined this week: 0</div>
+            <button onclick="updateCounter()">Refresh Counter</button>
         </div>
     </main>
 
-    <main id="about">
-        <h1>About Us</h1>
-        <div class="card">
-            <h2>Our Story</h2>
-            <p>We are a passionate team dedicated to creating amazing experiences.</p>
-            <button onclick="this.parentElement.style.backgroundColor = '#e0e0e0'">Change Background</button>
+    <!-- Rest of the sections remain the same -->
+    <main id="events">
+        <h1>Upcoming Events</h1>
+        <div class="event-grid">
+            <div class="card">
+                <h3>Linux Workshop</h3>
+                <p>Basic Linux commands and system administration</p>
+                <p>Date: December 1, 2024</p>
+                <button onclick="registerEvent(this)">Register Now</button>
+            </div>
+            <div class="card">
+                <h3>Red Hat Certification Prep</h3>
+                <p>RHCSA examination preparation session</p>
+                <p>Date: December 15, 2024</p>
+                <button onclick="registerEvent(this)">Register Now</button>
+            </div>
+            <div class="card">
+                <h3>Networking Session</h3>
+                <p>Meet industry professionals from Red Hat</p>
+                <p>Date: January 5, 2025</p>
+                <button onclick="registerEvent(this)">Register Now</button>
+            </div>
         </div>
     </main>
 
-    <main id="contact">
-        <h1>Contact Us</h1>
+    <main id="resources">
+        <h1>Learning Resources</h1>
+	<div class="card">
+            <h2>Red Hat Academy</h2>
+            <p>Red Hat® Academy benefits students and educational institutions alike by offering comprehensive curriculum, hands-on instruction, immersive labs, and performance-based testing.</p>
+            <button onclick="this.textContent = 'Redirecting...'">Apply Now</button>
+        </div>
         <div class="card">
-            <h2>Get in Touch</h2>
-            <form onsubmit="event.preventDefault(); alert('Message sent!');">
-                <div style="margin-bottom: 1rem;">
-                    <label for="name">Name:</label><br>
-                    <input type="text" id="name" required style="padding: 0.5rem; width: 100%; max-width: 300px;">
+            <h2>Study Materials</h2>
+            <p>Access our curated collection of learning resources</p>
+            <button onclick="this.textContent = 'Downloading...'">Download Materials</button>
+        </div>
+        <div class="card">
+            <h2>Tutorial Videos</h2>
+            <p>Watch our recorded workshop sessions</p>
+            <button onclick="this.textContent = 'Loading Videos...'">Watch Now</button>
+        </div>
+    </main>
+
+    <main id="join">
+        <h1>Join Red Hat Club</h1>
+        <div class="card">
+            <form onsubmit="event.preventDefault(); submitForm();">
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" required>
                 </div>
-                <div style="margin-bottom: 1rem;">
-                    <label for="message">Message:</label><br>
-                    <textarea id="message" required style="padding: 0.5rem; width: 100%; max-width: 300px; height: 100px;"></textarea>
+                <div class="form-group">
+                    <label for="student-id">Student ID:</label>
+                    <input type="text" id="student-id" required>
                 </div>
-                <button type="submit">Send Message</button>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="interest">Why do you want to join?</label>
+                    <textarea id="interest" rows="4" required></textarea>
+                </div>
+                <button type="submit">Submit Application</button>
             </form>
         </div>
     </main>
 
     <footer>
-        <p>© 2024 My Website. All rights reserved.</p>
+        <p>© 2024 APU Red Hat Club</p>
+        <div class="social-icons">
+            <a href="https://www.instagram.com/apuredhatclub/" onclick="alert('Follow us on Instagram!')">📷 Instagram</a>
+            <a href="https://discord.gg/EJgZwXt4" onclick="alert('Join our Discord!')">💬 Discord</a>
+            <a href="https://www.linkedin.com/company/apuredhatclub/" onclick="alert('Connect on LinkedIn!')">💼 LinkedIn</a>
+        </div>
     </footer>
 
     <script>
         function showPage(pageId) {
-            // Hide all pages
             document.querySelectorAll('main').forEach(page => {
                 page.classList.remove('visible');
             });
-            
-            // Show selected page
             document.getElementById(pageId).classList.add('visible');
             
-            // Update active navigation link
             document.querySelectorAll('nav a').forEach(link => {
                 link.classList.remove('active');
             });
             document.getElementById(pageId + 'Link').classList.add('active');
+
+            window.scrollTo(0, 0);
+        }
+
+        function updateCounter() {
+            const counter = document.getElementById('newsCounter');
+            const currentCount = parseInt(counter.textContent.split(':')[1]);
+            counter.textContent = 'Members joined this week: ' + (currentCount + 1);
+        }
+
+        function registerEvent(button) {
+            button.textContent = 'Registered ✓';
+            button.style.backgroundColor = '#4CAF50';
+            button.disabled = true;
+        }
+
+        function submitForm() {
+            alert('Thank you for your application! We will contact you soon.');
+            document.querySelector('form').reset();
         }
     </script>
 </body>
